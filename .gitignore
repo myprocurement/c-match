@@ -7,3 +7,5 @@ node_modules
 .settings
 .merge_file*
 .DS_Store
+
+.sass-cache
