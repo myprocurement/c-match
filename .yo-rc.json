@@ -1,0 +1,6 @@
+{
+  "generator-jhipster": {
+    "packageName": "com.cmatch",
+    "packageFolder": "com/cmatch"
+  }
+}
