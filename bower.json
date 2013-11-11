@@ -1,5 +1,5 @@
 {
-  "name": "cmatch",
+  "name": "cboost",
   "version": "0.0.0",
   "dependencies": {
     "sass-bootstrap": "~3.0.0",

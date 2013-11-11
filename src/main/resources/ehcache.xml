@@ -12,15 +12,23 @@
             overflowToDisk="false"
             />
 
-    <cache name="com.cmatch.domain.User"
+    <cache name="com.avricot.cboost.domain.user.User"
            timeToLiveSeconds="3600">
     </cache>
 
-    <cache name="com.cmatch.domain.Authority"
+    <cache name="com.avricot.cboost.domain.user.Authority"
            timeToLiveSeconds="3600">
     </cache>
 
-    <cache name="com.cmatch.domain.User.authorities"
+    <cache name="com.avricot.cboost.domain.user.User.authorities"
+           timeToLiveSeconds="3600">
+    </cache>
+   
+    <cache name="com.avricot.cboost.domain.user.PersistentToken"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="com.avricot.cboost.domain.user.User.persistentTokens"
            timeToLiveSeconds="3600">
     </cache>
 

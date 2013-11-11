@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "packageName": "com.cmatch",
-    "packageFolder": "com/cmatch"
+    "packageName": "com.avricot.cboost",
+    "packageFolder": "com/avricot/cboost"
   }
 }

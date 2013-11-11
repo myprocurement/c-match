@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.cmatch</groupId>
-    <artifactId>cmatch</artifactId>
+    <groupId>com.avricot.cboost</groupId>
+    <artifactId>cboost</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <description></description>
@@ -22,7 +22,7 @@
                 <logback.loglevel>DEBUG</logback.loglevel>
                 <!-- ehcache configuration -->
                 <ehcache.maxBytesLocalHeap>64M</ehcache.maxBytesLocalHeap>
-                <!-- database configuration  -->
+                <!-- development database configuration -->
                 <datasource.driverclassname>org.postgresql.Driver</datasource.driverclassname>
                 <datasource.url>jdbc:postgresql://localhost/cmatch</datasource.url>
                 <datasource.username>quentin</datasource.username>
@@ -33,7 +33,6 @@
                 <datasource.maxActive>5</datasource.maxActive>
                 <hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
                 <hibernate.show_sql>true</hibernate.show_sql>
-                <!--<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>-->
                 <hibernate.generate_statistics>true</hibernate.generate_statistics>
             </properties>
             <dependencies>
@@ -56,11 +55,11 @@
                 <logback.appender>CONSOLE</logback.appender>
                 <!-- ehcache configuration -->
                 <ehcache.maxBytesLocalHeap>256M</ehcache.maxBytesLocalHeap>
-                <!-- database configuration -->
+                <!-- production database configuration -->
                 <datasource.driverclassname>org.postgresql.Driver</datasource.driverclassname>
-                <datasource.url>jdbc:postgresql://localhost/cmatch</datasource.url>
-                <datasource.username>quentin</datasource.username>
-                <datasource.password>quentin</datasource.password>
+                <datasource.url>jdbc:postgresql://localhost/cboost</datasource.url>
+                <datasource.username>cboost</datasource.username>
+                <datasource.password></datasource.password>
                 <datasource.initialSize>4</datasource.initialSize>
                 <datasource.minIdle>4</datasource.minIdle>
                 <datasource.maxIdle>10</datasource.maxIdle>
@@ -82,13 +81,13 @@
     <properties>
         <!-- Maven build properties -->
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.7</java.version>
+        <java.version>1.6</java.version>
 
         <!-- Librairies versions -->
-        <spring.version>3.2.4.RELEASE</spring.version>
-          
+        <spring.version>3.2.3.RELEASE</spring.version>  
         <spring.security.version>3.1.3.RELEASE</spring.security.version>
         <hibernate.version>4.2.6.Final</hibernate.version>
+        <codahale.metrics.version>3.0.1</codahale.metrics.version>
     </properties>
 
     <repositories>
@@ -97,15 +96,6 @@
             <name>Sonatype Releases Repository</name>
             <url>http://oss.sonatype.org/content/repositories/releases/</url>
         </repository>
-        
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>http://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
           
     </repositories>
     <prerequisites>
@@ -113,6 +103,31 @@
     </prerequisites>
 
     <dependencies>
+        <dependency>
+            <groupId>com.codahale.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+            <version>${codahale.metrics.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codahale.metrics</groupId>
+            <artifactId>metrics-ehcache</artifactId>
+            <version>${codahale.metrics.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codahale.metrics</groupId>
+            <artifactId>metrics-graphite</artifactId>
+            <version>${codahale.metrics.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codahale.metrics</groupId>
+            <artifactId>metrics-servlet</artifactId>
+            <version>${codahale.metrics.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codahale.metrics</groupId>
+            <artifactId>metrics-servlets</artifactId>
+            <version>${codahale.metrics.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-json-org</artifactId>
@@ -124,39 +139,14 @@
             <version>2.1.2</version>
         </dependency>
         <dependency>
+            <groupId>com.ryantenney.metrics</groupId>
+            <artifactId>metrics-spring</artifactId>
+            <version>3.0.0-RC2</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
             <version>2.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yammer.metrics</groupId>
-            <artifactId>metrics-core</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yammer.metrics</groupId>
-            <artifactId>metrics-ehcache</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yammer.metrics</groupId>
-            <artifactId>metrics-graphite</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yammer.metrics</groupId>
-            <artifactId>metrics-servlet</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yammer.metrics</groupId>
-            <artifactId>metrics-spring</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yammer.metrics</groupId>
-            <artifactId>metrics-web</artifactId>
-            <version>2.2.0</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -350,12 +340,54 @@
             <version>${spring.security.version}</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.ibm.icu</groupId>
+            <artifactId>icu4j</artifactId>
+            <version>4.8.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
+        </dependency>
+
         <!-- Test dependencies -->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
             <version>0.8.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.3.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -411,8 +443,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -431,7 +463,7 @@
                                     <version>[3.0.0,)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[1.7.0,)</version>
+                                    <version>[1.6.0,)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -483,6 +515,7 @@
                             <value>development</value>
                         </systemProperty>
                     </systemProperties>
+                    <jvmArgs>-javaagent:spring_loaded/springloaded-1.1.4.jar -noverify</jvmArgs>
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>

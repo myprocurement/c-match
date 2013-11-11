@@ -14,11 +14,11 @@
             -->
     </absolute-ordering>
 
-    <display-name>cmatch</display-name>
+    <display-name>cboost</display-name>
 
     <!-- All the Servlets and Filters are configured by this ServletContextListener : -->
     <listener>
-        <listener-class>com.cmatch.conf.WebConfigurer</listener-class>
+        <listener-class>com.avricot.cboost.conf.WebConfigurer</listener-class>
     </listener>
 
     <error-page>

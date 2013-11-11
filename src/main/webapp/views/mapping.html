@@ -1,0 +1,45 @@
+<div ng-controller="MappingController" data-ng-init="init()">
+    Project {{data.project.name}}
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th></th>
+                <th>First column</th>
+                <th>Field Type</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in data.filePreview[0]">
+                <td>#{{$index+1}}</td>
+                <td>{{row}}</td>
+                <td>
+                    <select ng-model="data.matchingFieldType[$index]" name="{{'field_'+$index}}" ng-options="field.name as field.label for field in data.fieldTypes">
+                        <option value="">-- not mapped --</option>
+                    </select>
+
+                </td>
+                <td><small class="text-muted">{{data.filePreview[1][$index]}}</small></td>
+                <td><small class="text-muted">{{data.filePreview[2][$index]}}</small></td>
+                <td><small class="text-muted">{{data.filePreview[3][$index]}}</small></td>
+            </tr>
+        </tbody>
+    </table>
+    <button style="float: right" type="button" class="btn btn-primary" ng-click="sendMapping()">Valider</button>
+
+    Mapping preview
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th ng-repeat="field in data.fieldTypes">{{field.label}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="line in getFilePreviewSkipFirst()">
+                <td ng-repeat="field in data.fieldTypes">{{line[getFieldMatch(field)]}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
