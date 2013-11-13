@@ -1,5 +1,8 @@
 <div ng-controller="MappingController" data-ng-init="init()">
     Project {{data.project.name}}
+    <div class="alert alert-danger" ng-show="error.multiField">
+        Vous avez mappé plusieurs fois le même champ sur des colonnes différentes, veuillez corriger
+    </div>
     <table class="table table-condensed">
         <thead>
             <tr>
@@ -16,7 +19,7 @@
                 <td>#{{$index+1}}</td>
                 <td>{{row}}</td>
                 <td>
-                    <select ng-model="data.matchingFieldType[$index]" name="{{'field_'+$index}}" ng-options="field.name as field.label for field in data.fieldTypes">
+                    <select ng-change="checkFieldError()" ng-model="data.matchingFieldType[$index]" name="{{'field_'+$index}}" ng-options="field.name as field.label for field in data.fieldTypes">
                         <option value="">-- not mapped --</option>
                     </select>
 
@@ -27,9 +30,9 @@
             </tr>
         </tbody>
     </table>
-    <button style="float: right" type="button" class="btn btn-primary" ng-click="sendMapping()">Valider</button>
+    <button ng-hide="hasError()" style="float: right" type="button" class="btn btn-primary" ng-click="sendMapping()">Valider</button>
 
-    Mapping preview
+    <p style="clear: both">Mapping preview</p>
     <table class="table table-condensed">
         <thead>
             <tr>

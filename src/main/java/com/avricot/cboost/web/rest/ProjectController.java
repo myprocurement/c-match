@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -19,11 +20,17 @@ public class ProjectController {
     @Inject
     private ProjectService projectService;
 
-
     @RequestMapping(value = "/rest/project/{projectId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     @Timed
-    public ProjectMappingJson saveAccount(@PathVariable Long projectId) throws IOException {
+    public ProjectMappingJson getProjectMapping(@PathVariable Long projectId) throws IOException {
         return projectService.getById(projectId);
     }
+
+    @RequestMapping(value = "/rest/project", method = RequestMethod.POST, produces = "application/json")
+    @Timed
+    public void updateProjectMapping(@RequestBody ProjectCommand command) throws IOException {
+        projectService.updateProjectMapping(command);
+    }
+
 }

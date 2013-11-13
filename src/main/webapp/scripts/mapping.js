@@ -1,11 +1,13 @@
 cboostApp.factory('Project', function($resource){
     return $resource('/app/rest/project/:id',{}, {
-        'updateMapping': { method: 'POST', isArray: true}
+        'updateMapping': { method: 'POST'}
     });
 });
 
 cboostApp.controller('MappingController', function MappingController($routeParams, $scope, Project, $filter) {
-    console.log($routeParams.projectId)
+    $scope.error = {
+        multiField :false
+    }
     $scope.init = function () {
         $scope.data = Project.get({id: $routeParams.projectId}, function(data) {
             $scope.getFilePreviewSkipFirst = function(field){
@@ -25,7 +27,26 @@ cboostApp.controller('MappingController', function MappingController($routeParam
         };
     };
     $scope.sendMapping = function(){
-        console.log($scope.field);
+        Project.updateMapping({id: $routeParams.projectId, fields: $scope.data.matchingFieldType});
+        console.log($scope.data.matchingFieldType);
+        //$location.path('/someNewPath');
     };
+
+    $scope.hasError = function () {
+        for(error in $scope.error){
+            if ($scope.error[error]){
+                return true;
+            }
+        }
+        return false ;
+    }
+    $scope.checkFieldError = function(){
+        $scope.error.multiField = false;
+        $.each($scope.data.matchingFieldType, function (i, val) {
+            if(val != null && $scope.data.matchingFieldType.filter(function(x){return x==val}).length>1) {
+                $scope.error.multiField = true;
+            }
+        });
+    }
 
 });

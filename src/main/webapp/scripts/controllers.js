@@ -2,8 +2,19 @@
 
 /* Controllers */
 
-cboostApp.controller('MainController', function MainController($scope) {
-
+cboostApp.controller('MainController', function MainController($scope, $location, AuthenticationSharedService) {
+    $scope.demo = function () {
+        console.log("okokok")
+        AuthenticationSharedService.login({
+            username: "admin",
+            password: "admin",
+            rememberMe: false,
+            success:function () {
+                $location.path('/mapping/1');
+            }
+        })
+    };
+    console.log("aaa")
 });
 
 cboostApp.controller('MenuController', function MenuController($rootScope, $scope, $location, Account, AuthenticationSharedService) {
@@ -23,27 +34,17 @@ cboostApp.controller('MenuController', function MenuController($rootScope, $scop
     $scope.init();
 });
 
-cboostApp.controller('LoginController', function LoginController($scope, $http, $location, AuthenticationSharedService) {
+cboostApp.controller('LoginController', function LoginController($scope, $location, AuthenticationSharedService) {
     $scope.rememberMe = true;
     $scope.login = function () {
-        var data =
-            "j_username=" + $scope.username +
-            "&j_password=" + $scope.password +
-            "&_spring_security_remember_me=" + $scope.rememberMe +
-                "&submit=Login";
-
-        $http.post('/app/authentication', data, {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        }).
-            success(function (data, status, headers, config) {
-                AuthenticationSharedService.prepForBroadcast("login");
+        AuthenticationSharedService.login({
+            username: $scope.username,
+            password: $scope.password,
+            rememberMe: $scope.rememberMe,
+            success:function () {
                 $location.path('');
-            }).
-            error(function (data, status, headers, config) {
-                $scope.authenticationError = true;
-            });
+            }
+        })
     };
 });
 

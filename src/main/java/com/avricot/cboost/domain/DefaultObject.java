@@ -2,10 +2,7 @@ package com.avricot.cboost.domain;
 
 import org.springframework.util.ObjectUtils;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @MappedSuperclass
@@ -14,7 +11,7 @@ public abstract class DefaultObject implements Identifiable<Long>, Serializable 
 
     @Column(name = "ID")
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private java.lang.Long id;
 
     public DefaultObject() {

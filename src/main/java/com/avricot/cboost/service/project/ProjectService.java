@@ -3,11 +3,13 @@ package com.avricot.cboost.service.project;
 import com.avricot.cboost.domain.project.Field;
 import com.avricot.cboost.domain.project.FieldType;
 import com.avricot.cboost.domain.project.Project;
+import com.avricot.cboost.repository.FieldRepository;
 import com.avricot.cboost.repository.ProjectRepository;
 import com.avricot.cboost.service.project.reader.FileReaderService;
 import com.avricot.cboost.service.project.reader.ILineReader;
 import com.avricot.cboost.utils.EnumJson;
 import com.avricot.cboost.utils.StringUtils;
+import com.avricot.cboost.web.rest.ProjectCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +42,9 @@ public class ProjectService {
 
     @Inject
     private ProjectRepository projectRepository;
+
+    @Inject
+    private FieldRepository fieldRepository;
 
     @Inject
     private FileReaderService fileReaderService;
@@ -201,4 +206,15 @@ public class ProjectService {
         return null;
     }
 
+    public void updateProjectMapping(final ProjectCommand command) {
+        fieldRepository.deleteByProjectId(command.getId());
+        Project project = projectRepository.findOneFetchingMapping(command.getId());
+        int i =0;
+        for(FieldType type : command.getFields()){
+            if(type != null){
+                fieldRepository.save(new Field(type, i, project));
+            }
+            i++;
+        }
+    }
 }

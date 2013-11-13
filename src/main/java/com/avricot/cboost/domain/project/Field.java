@@ -25,6 +25,12 @@ public class Field extends DefaultObject {
     public Field() {
     }
 
+    public Field(final FieldType type, final Integer position, final Project project) {
+        this.type = type;
+        this.position = position;
+        this.project = project;
+    }
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private FieldType type;

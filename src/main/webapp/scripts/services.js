@@ -25,19 +25,34 @@ cboostApp.factory('Metrics', function($resource){
 });
 
 
-cboostApp.factory('AuthenticationSharedService', function($rootScope) {
-    var authenticationSharedService = {};
-
-    authenticationSharedService.message = '';
-
-    authenticationSharedService.prepForBroadcast = function(msg) {
-        this.message = msg;
-        this.broadcastItem();
+cboostApp.factory('AuthenticationSharedService', function($rootScope, $http) {
+    return {
+        message: '',
+        prepForBroadcast: function(msg) {
+            this.message = msg;
+            this.broadcastItem();
+        },
+        broadcastItem: function() {
+            $rootScope.$broadcast("authenticationEvent");
+        },
+        login: function (param) {
+            var that = this;
+            var data ="j_username=" + param.username +"&j_password=" + param.password +"&_spring_security_remember_me=" + param.rememberMe +"&submit=Login";
+            $http.post('/app/authentication', data, {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            }).success(function (data, status, headers, config) {
+                that.prepForBroadcast("login");
+                if(param.success){
+                    param.success(data, status, headers, config);
+                }
+            }).error(function (data, status, headers, config) {
+                $scope.authenticationError = true;
+                if(param.error){
+                    param.error(data, status, headers, config);
+                }
+            });
+        }
     };
-
-    authenticationSharedService.broadcastItem = function() {
-        $rootScope.$broadcast("authenticationEvent");
-    };
-
-    return authenticationSharedService;
 });
