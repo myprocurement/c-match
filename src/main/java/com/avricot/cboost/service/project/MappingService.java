@@ -36,9 +36,9 @@ import java.util.regex.Pattern;
  */
 @Service
 @Transactional
-public class ProjectService {
+public class MappingService {
     public final static List<EnumJson> FIELD_TYPES = new ArrayList<EnumJson>();
-    private static final Logger log = LoggerFactory.getLogger(ProjectService.class);
+    private static final Logger log = LoggerFactory.getLogger(MappingService.class);
 
     @Inject
     private ProjectRepository projectRepository;

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class ProjectServiceTest {
 
-    private ProjectService service = new ProjectService();
+    private MappingService service = new MappingService();
     @Test
     public void testGuessHeadFieldType() throws Exception {
         Assert.assertEquals(FieldType.NAME,service.guessHeadFieldType("raison sociale"));

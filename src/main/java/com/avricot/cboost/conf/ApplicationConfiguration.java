@@ -2,12 +2,16 @@ package com.avricot.cboost.conf;
 
 import com.avricot.cboost.service.ApplicationContextHolder;
 import com.avricot.cboost.utils.MsgHelper;
+import org.elasticsearch.node.Node;
+import org.elasticsearch.node.NodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -29,6 +33,8 @@ public class ApplicationConfiguration {
 
     @Inject
     private Environment env;
+    @Value("es.cluster.name")
+    private String clusterName;
 
     /**
      * Initializes cboost.
@@ -59,6 +65,12 @@ public class ApplicationConfiguration {
     @Bean
     public ApplicationContextHolder setApplicationContextHolder(){
         return new ApplicationContextHolder();
+    }
+
+    @Bean
+    public ElasticsearchTemplate setElasticsearchTemplate(){
+        Node node = NodeBuilder.nodeBuilder().client(true).clusterName(clusterName).node();
+        return new ElasticsearchTemplate(node.client());
     }
 
 }

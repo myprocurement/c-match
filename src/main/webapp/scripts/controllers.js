@@ -4,7 +4,6 @@
 
 cboostApp.controller('MainController', function MainController($scope, $location, AuthenticationSharedService) {
     $scope.demo = function () {
-        console.log("okokok")
         AuthenticationSharedService.login({
             username: "admin",
             password: "admin",
@@ -14,7 +13,6 @@ cboostApp.controller('MainController', function MainController($scope, $location
             }
         })
     };
-    console.log("aaa")
 });
 
 cboostApp.controller('MenuController', function MenuController($rootScope, $scope, $location, Account, AuthenticationSharedService) {

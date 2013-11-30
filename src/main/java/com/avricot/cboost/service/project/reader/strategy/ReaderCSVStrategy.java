@@ -48,8 +48,9 @@ public class ReaderCSVStrategy implements IReaderStrategy{
             CSVReader finalReader = new CSVReader(new FileReader(file), getBestSeparator(separatorCount));
             String[] nextLine;
             int i =0;
+            Object result = null;
             while ((nextLine = finalReader.readNext()) != null) {
-                lineProcessor.processLine(i, nextLine);
+                result = lineProcessor.processLine(i, nextLine, result);
                 i++;
                 if(lineMaxToRead != null && i>lineMaxToRead){
                     break;

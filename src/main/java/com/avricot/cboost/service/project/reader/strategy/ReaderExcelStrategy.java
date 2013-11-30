@@ -34,6 +34,7 @@ public class ReaderExcelStrategy implements IReaderStrategy{
             // Row number
             double rowNumberInTheSheet = sheet.getPhysicalNumberOfRows();
             // We fill textContainer.
+            Object result = null;
             for (int lineNumber = 0; lineNumber < rowNumberInTheSheet; lineNumber++) {
                 Row row = sheet.getRow(lineNumber);
                 String[] dataArray = new String[row.getPhysicalNumberOfCells()];
@@ -43,7 +44,7 @@ public class ReaderExcelStrategy implements IReaderStrategy{
                         Object value = ContenuCellule(cellule);
                         dataArray[column] = value.toString();
                     }
-                    lineProcessor.processLine(lineNumber, dataArray);
+                    result = lineProcessor.processLine(lineNumber, dataArray, result);
                 }
                 if(lineMaxToRead != null && lineNumber>lineMaxToRead){
                     break;

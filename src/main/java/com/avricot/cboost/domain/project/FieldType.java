@@ -9,10 +9,12 @@ import java.util.regex.Pattern;
  *
  */
 public enum FieldType {
-    ID("(siret|siren|id|tva|vat)"),
+    ID("(id)"),
+    NATIONAL_ID("(siret|siren|national id|tva|vat)"),
     NAME("(raison|social|name|nom|fournisseur|entreprise|company)"),
     ZIP_CODE("(code|postal|zip|CP)", "naf"),
     ADDRESS("(adresse|address)"),
+    CITY("(ville|city)"),
     COUNTRY("(pays|country)");
 
     FieldType(final String pattern) {

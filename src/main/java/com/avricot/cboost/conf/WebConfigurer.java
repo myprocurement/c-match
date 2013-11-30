@@ -1,7 +1,7 @@
 package com.avricot.cboost.conf;
 
 import com.avricot.cboost.service.ApplicationContextHolder;
-import com.avricot.cboost.service.project.ProjectService;
+import com.avricot.cboost.service.project.MappingService;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.codahale.metrics.servlet.InstrumentedFilter;
@@ -49,7 +49,7 @@ public class WebConfigurer implements ServletContextListener {
         initSpringSecurity(servletContext, disps);
         initMetrics(servletContext, disps);
         initGzip(servletContext, disps);
-        ApplicationContextHolder.getContext().getBean(ProjectService.class).initDemoProject();
+        ApplicationContextHolder.getContext().getBean(MappingService.class).initDemoProject();
 
         log.debug("Web application fully configured");
     }
